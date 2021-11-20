@@ -1,6 +1,7 @@
-var fs = require("fs");
-var input = fs.readFileSync("/dev/stdin").toString().split(" ");
+var fs = require("fs")
+var input = fs.readFileSync("/dev/stdin").toString().split(" ")
 // var input = require("fs").readFileSync("input.txt").toString().split(" ");
-var a = parseInt(input[0]);
-var b = parseInt(input[1]);
-console.log(a + b);
+var a = parseInt(input[0])
+var b = parseInt(input[1])
+console.log(a + b)
+// test
