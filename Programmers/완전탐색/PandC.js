@@ -34,7 +34,7 @@ function getPermutation(arr, selectNum) {
   if (selectNum === 1) return arr.map((el) => [el])
 
   arr.forEach((fixed, index, origin) => {
-    // fixed를 제외한 나버지 배열
+    // fixed를 제외한 나버지 배열 (index 번째 요소만 쏙 빼놓고)
     const rest = [...origin.slice(0, index), ...origin.slice(index + 1)]
 
     const permutations = getPermutation(rest, selectNum - 1)
