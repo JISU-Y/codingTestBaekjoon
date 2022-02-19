@@ -1,31 +1,28 @@
 function solution(record) {
   let answer = []
-  const messages = {
+  const namespace = {}
+  const command = {
     Enter: "님이 들어왔습니다.",
     Leave: "님이 나갔습니다.",
-    Change: "",
   }
-  let nickname = {}
 
-  console.log(record.map((el) => ({ [el.split(" ")[1]]: { behavior: el.split(" ")[0], name: el.split(" ")[2] } })))
-
-  for (let i = 0; i < record.length; i++) {
-    const el = record[i].split(" ")
-
+  record = record.map((element) => {
+    const el = element.split(" ")
     if (el[0] === "Enter") {
-      nickname = { ...nickname, [el[1]]: el[2] }
-      answer.push({ behavior: `${el[2]}${messages[el[0]]}`, uid: el[1] })
-    }
-    if (el[0] === "Leave") {
-      answer.push({ behavior: `${nickname[el[1]]}${messages[el[0]]}`, uid: el[1] })
+      // namespace에 id: 현재 이름 추가
+      namespace[el[1]] = el[2]
+      return { cmd: el[0], id: el[1] }
+    } else if (el[0] === "Leave") {
+      return { cmd: el[0], id: el[1] }
     } else {
-      nickname = { ...nickname, [el[1]]: el[2] }
+      namespace[el[1]] = el[2]
+      return null
     }
-  }
+  })
 
-  console.log(answer)
-  console.log(nickname)
-  return answer
+  answer = record.map((el) => (el ? `${namespace[el.id]}${command[el.cmd]}` : null))
+
+  return answer.filter((el) => el)
 }
 
 solution([
@@ -36,3 +33,30 @@ solution([
   "Change uid4567 Ryan",
 ])
 // ["Prodo님이 들어왔습니다.", "Ryan님이 들어왔습니다.", "Prodo님이 나갔습니다.", "Prodo님이 들어왔습니다."]
+
+// 다른 사람 풀이
+function solution1(record) {
+  let answer = []
+  const namespace = {}
+  const command = {
+    Enter: "님이 들어왔습니다.",
+    Leave: "님이 나갔습니다.",
+  }
+
+  record.forEach((element) => {
+    // 구조 분해 할당 활용
+    const [cmd, id, name] = element.split(" ")
+
+    if (name) {
+      namespace[id] = name
+    }
+
+    if (cmd !== "Change") {
+      answer.push({ cmd, id })
+    }
+  })
+
+  answer = answer.map((el) => `${namespace[el.id]}${command[el.cmd]}`)
+
+  return answer.filter((el) => el)
+}

@@ -1,13 +1,16 @@
 function solution(progresses, speeds) {
   let answer = []
 
+  // progresses를 한 칸씩 앞으로 뺄 것이기 때문에(100이 된 작업은 없애버리면 되니까)
+  // [0]이 없을 때 까지 반복문 실행
   while (progresses[0]) {
+    // 작업 계산 : index에 맞춰서 speed를 더해준다. 대신 100 넘으면 그냥 100으로 침
     progresses = progresses.map((progress, index) => (progress + speeds[index] >= 100 ? 100 : progress + speeds[index]))
-
-    console.log(progresses)
 
     let count = 0 // 배포 수
 
+    // 맨 앞의 작업이 100이 된 순간 다시 한번 반복문
+    // 맨 앞에 있는 것 말고도 뒤에 있는 것들도 작업이 끝났는지도 봐야하니까
     while (progresses[0] >= 100) {
       if (progresses[0] >= 100) {
         progresses.shift()
@@ -17,13 +20,12 @@ function solution(progresses, speeds) {
         count = 0
       }
     }
+
+    // 배포한 것이 있을 때만 배포 수 넣음
     if (count) {
       answer.push(count)
     }
   }
-
-  console.log(progresses)
-  console.log(answer)
 
   return answer
 }
