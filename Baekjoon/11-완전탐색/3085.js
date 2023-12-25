@@ -70,11 +70,3 @@ function getMaxEdibleCandies(N) {
 }
 
 console.log(getMaxEdibleCandies(N))
-
-// 1 2 5
-// 2 1 5
-// 3 4 6
-
-// 1 <-(3)- 2 <-(2)- -(1)-> 3  4
-// 나이가 가중치
-//

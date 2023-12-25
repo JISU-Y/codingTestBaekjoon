@@ -1,8 +1,7 @@
 /* 연결 요소의 개수 */
 const fs = require("fs")
 // let input = process.platform === "linux" ? fs.readFileSync("/dev/stdin") : fs.readFileSync("./input.txt")
-let input = `
-6 8
+let input = `6 8
 1 2
 2 5
 5 1
@@ -102,4 +101,6 @@ relationList.forEach((el) => {
   graph.addEdge(u, v)
 })
 
-console.log(graph.connectedComponents().count)
+console.log(graph.adjacencyList)
+
+console.log(graph.connectedComponents())
