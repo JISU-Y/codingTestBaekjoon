@@ -19,15 +19,17 @@ const rl = readline.createInterface({
 let input = []
 
 rl.on("line", function (line) {
-  input.push(line.split(" ").map((e) => +e))
+  input.push(line.split(" "))
 }).on("close", function () {
-  const [N, M] = input.shift()
+  const [N, M] = input.shift().map((e) => +e)
   const mazeArr = input.map((el) =>
     String(el[0])
       .split("")
       .map((e) => +e)
   )
-  //   console.log(mazeArr)
+
+  //   [[1, NaN, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, NaN, NaN, 2, 4],
+  //   [1, NaN, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, NaN, NaN, 2, 4]]
 
   solution(mazeArr, N, M)
   process.exit()
@@ -35,10 +37,10 @@ rl.on("line", function (line) {
 
 function solution(array, N, M) {
   let queue = [[0, 0]]
-  let visited = new Array(N).fill(0).map(() => new Array(M).fill(false))
+  let visited = new Array(N).fill(0).map(() => new Array(M).fill(-1))
   let result = []
 
-  visited[0][0] = true
+  visited[0][0] = 1
 
   while (queue.length) {
     let currentPos = queue.shift()
@@ -54,28 +56,21 @@ function solution(array, N, M) {
           return [x, y]
         }
       })
-      .filter((el) => el && array[el[0]][el[1]] && !visited[el[0]][el[1]])
-
-    console.log(neighbors)
+      .filter((el) => el && array[el[0]][el[1]] && visited[el[0]][el[1]] < 0)
 
     result.push(currentPos)
 
     if (currentPos[0] === N - 1 && currentPos[1] === M - 1) {
-      console.log("result", result)
-      console.log("answer", result.length)
+      //   console.log("result", result) // 방문했던 모든 노드. BFS traverse
+      console.log("visited", visited)
+      console.log(visited[N - 1][[M - 1]])
       return result
     }
 
     for (let i = 0; i < neighbors.length; i++) {
       let neighborPos = neighbors[i]
-      //   console.log("array", array[neighborPos[0]][neighborPos[1]])
-      //   console.log("visited", visited)
-      //   if (neighbors.length === 1 && neighbors[0].every((el, i) => el === neighborPos[i])) {
-      //     console.log("?>?><", neighborPos)
-      //   }
-      //   console.log(neighborPos, visited[neighborPos[0]][neighborPos[1]])
-      if (array[neighborPos[0]][neighborPos[1]] && !visited[neighborPos[0]][neighborPos[1]]) {
-        visited[neighborPos[0]][neighborPos[1]] = true
+      if (array[neighborPos[0]][neighborPos[1]] && visited[neighborPos[0]][neighborPos[1]] === -1) {
+        visited[neighborPos[0]][neighborPos[1]] = visited[currentPos[0]][currentPos[1]] + 1
         queue.push(neighborPos)
       }
     }
