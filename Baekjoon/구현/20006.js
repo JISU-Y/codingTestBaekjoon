@@ -24,34 +24,43 @@ const WAITING = "Waiting!"
 rl.on("line", function (line) {
   input.push(line)
 }).on("close", function () {
-  input.shift()
+  const preInfo = input.shift()
+  const [numOfPlayers, limit] = preInfo.split(" ").map((el) => +el)
 
   let roomList = []
 
   input.forEach((user) => {
-    // console.log("🚀 ~ input.forEach ~ user:", user)
     const [userLevel, userName] = getUserInfo(user)
 
-    // 다시 각잡고 풀자..
-    roomList.forEach((room) => {
-      const hostUser = room.find((el) => el.host)
+    for (let room of roomList) {
+      if (room.length >= limit) continue
 
-      if (!hostUser) return
+      const hostUser = room.find((el) => el.host)
 
       const [hostLevel, hostName] = getUserInfo(hostUser.user)
 
       if (userLevel >= hostLevel - 10 && userLevel <= hostLevel + 10) {
         room.push({ user, host: false })
-        room.sort((a, b) => a.user.split(" ")[1] - b.user.split(" ")[1])
-      } else {
-        roomList.push([{ user, host: true }])
+        room.sort((a, b) => a.user.split(" ")[1].localeCompare(b.user.split(" ")[1]))
+
+        return
       }
-    })
+    }
 
     roomList.push([{ user, host: true }])
   })
 
-  console.log("roomList", roomList)
+  const roomResultList = roomList.map((room) => {
+    let roomInfoString = room.map(({ user }) => user).join("\n")
+
+    if (room.length === limit) {
+      return `${STARTED}\n${roomInfoString}`
+    }
+
+    return `${WAITING}\n${roomInfoString}`
+  })
+
+  console.log(roomResultList.join("\n"))
 
   process.exit()
 })
@@ -62,18 +71,3 @@ const getUserInfo = (userString) => {
 
   return [level, name]
 }
-
-// roomList
-// room: 10 a | 15 b | 20 c | 17 f | 18 g
-// room: 25 d | 30 e | 26 h | 24 i | 28 j
-
-// 10 a
-// 15 b
-// 20 c
-// 25 d
-// 30 e
-// 17 f
-// 18 g
-// 26 h
-// 24 i
-// 28 j

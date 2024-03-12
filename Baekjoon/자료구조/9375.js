@@ -22,8 +22,7 @@ rl.on("line", function (line) {
   input.push(line.split(" "))
 }).on("close", function () {
   const testcases = input.shift()
-  console.log("🚀 ~ testcases:", testcases)
-  let answer
+  let answer = []
 
   for (let i = 0; i < input.length - 1; ) {
     const clothes = Number(input[i])
@@ -33,21 +32,17 @@ rl.on("line", function (line) {
     for (let j = 1; j <= clothes; j++) {
       const [name, type] = input[i + j]
 
-      closet = { ...closet, [type]: closet?.[type] ? [...closet[type], name] : [name] }
+      closet = { ...closet, [type]: closet?.[type] ? closet[type] + 1 : 1 }
     }
-    console.log("🚀 ~ closet:", closet)
-    const combination = Object.keys(closet)
-    console.log("🚀 ~ combination:", combination.length)
 
-    let number = 0
+    const combinations = Object.values(closet).reduce((acc, cur) => (acc *= cur + 1), 1)
 
-    for (let k = 1; k <= combination.length; k++) {
-      const comb = getCombinations(combination, k)
-      // 또 반복문..?
-    }
+    answer.push(combinations - 1)
 
     i += clothes + 1
   }
+
+  console.log(answer.join("\n"))
 
   process.exit()
 })
