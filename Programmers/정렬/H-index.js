@@ -2,6 +2,7 @@ function solution(citations) {
   let answer = 0
 
   const cits = citations.sort((a, b) => b - a)
+  console.log("🚀 ~ solution ~ cits:", cits)
 
   // citNum = 인용 횟수
   for (let citNum = 0; citNum <= citations.length; citNum++) {

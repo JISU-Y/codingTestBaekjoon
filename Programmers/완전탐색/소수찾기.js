@@ -42,10 +42,7 @@ function solution(numbers) {
     methods.push(final)
   }
 
-  console.log(methods)
-
   // 조합이 겹치는 경우도 있으므로 set으로 겹침 제거
-  console.log(methods.flat(1).map((el) => Number(el.join(""))))
   let set = [...new Set(methods.flat(1).map((el) => Number(el.join(""))))]
 
   console.log(set)
