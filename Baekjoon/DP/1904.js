@@ -1,13 +1,13 @@
 /* 01타일 */
 /* ! 테스트 */
-const path = "./input.txt"
-const fs = require("fs")
+const path = "./input.txt";
+const fs = require("fs");
 
-const readline = require("readline")
+const readline = require("readline");
 const rl = readline.createInterface({
   input: fs.createReadStream(path),
   output: process.stdout,
-})
+});
 
 // /* ! 제출용 */
 // const readline = require("readline");
@@ -16,27 +16,28 @@ const rl = readline.createInterface({
 //     output: process.stdout,
 // });
 
-let input = []
+let input = [];
 
 rl.on("line", function (line) {
-  input.push(line)
+  input.push(line);
 }).on("close", function () {
-  const N = Number(input[0])
-  let tileList = Array(N + 1).fill(0)
+  4444;
+  const N = Number(input[0]);
+  let tileList = Array(N + 1).fill(0);
 
   // 1 2 3 5 8 13
-  tileList[1] = 1
-  tileList[2] = 2
+  tileList[1] = 1;
+  tileList[2] = 2;
 
   for (let i = 3; i <= N; i++) {
-    const sum = (tileList[i - 1] % 15746) + (tileList[i - 2] % 15746)
-    tileList[i] = sum - (sum >= 15746 ? 15746 : 0)
+    const sum = (tileList[i - 1] % 15746) + (tileList[i - 2] % 15746);
+    tileList[i] = sum - (sum >= 15746 ? 15746 : 0);
   }
 
-  console.log(tileList[N])
+  console.log(tileList[N]);
 
-  process.exit()
-})
+  process.exit();
+});
 
 // 1 -> 1
 // 00, 11 -> 2
