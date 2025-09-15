@@ -129,3 +129,5 @@ console.log(
 //  3
 // /
 //4
+
+// 풀이 과정 영감: https://uic11.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EA%B7%B8%EB%9E%98%ED%94%84-%EC%88%9C%EC%9C%84-%EB%AC%B8%EC%A0%9C-%ED%92%80%EC%9D%B4-featJS
